@@ -11,10 +11,11 @@
 		
 */
 
-function Instagram( clientID, responseURL ){
+function Instagram( clientID, responseURL, proxy ){
 	this.clientID = clientID;
 	this.responseURL = responseURL;
 	this.accessToken = "";
+	this.proxy = proxy;
 	this.options = {
 		url: "",
 		data: { access_token : this.accessToken },
@@ -51,7 +52,17 @@ Instagram.prototype.createRequest = function( options ) {
 	}
 	else{
 		console.log("Updated Options", $.extend( {}, this.options, options ) );
-		return $.extend( {}, this.options, options );
+		var newOptions = $.extend( {}, this.options, options );
+		
+		if( newOptions.type === "POST" )
+		{
+			newOptions.data = $.extend( {}, newOptions.data, { 
+				postURL: newOptions.url
+			});
+			newOptions.url = this.proxy;
+		}
+		
+		return newOptions;
 	}
 }
 
@@ -80,7 +91,7 @@ Instagram.prototype.getToken = function(){
 */
 
 Instagram.prototype.authorize = function( scopes ){
-	var scopeString = ( scopes ) ? "&scopes=" + scopes.join("+") : "";
+	var scopeString = ( scopes ) ? "&scope=" + scopes.join("+") : "";
 	var url = this.apiURLS.authorize.replace(/{{clientid}}/ig, this.clientID);
 	
 	url  = url.replace(/{{response}}/, this.responseURL);
@@ -208,7 +219,7 @@ Instagram.prototype.getComments = function( callback, id ) {
 		})
 	);
 }
-/*
+
 Instagram.prototype.setComment = function( callback, id, text ) {
 	var customURL = this.apiURLS.comments.replace(/{{id}}/ig, id);
 	var data ={}
@@ -222,11 +233,13 @@ Instagram.prototype.setComment = function( callback, id, text ) {
 			data: data,
 			type: "POST",
 			dataType: "json",
-			success: callback
+			success: callback,
+			error: function( response ){
+				console.log("ERROR: ", response );
+			}
 		})
 	);
 }
-*/
 
 /*
 
