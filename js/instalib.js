@@ -54,11 +54,13 @@ Instagram.prototype.createRequest = function( options ) {
 		console.log("Updated Options", $.extend( {}, this.options, options ) );
 		var newOptions = $.extend( {}, this.options, options );
 		
-		if( newOptions.type === "POST" )
+		if( newOptions.type !== "GET" )
 		{
 			newOptions.data = $.extend( {}, newOptions.data, { 
-				postURL: newOptions.url
+				postURL: newOptions.url,
+				requestType: newOptions.type === "POST" ? "POST" : "DELETE"
 			});
+			newOptions.type = "POST";
 			newOptions.url = this.proxy;
 		}
 		
@@ -117,11 +119,20 @@ Instagram.prototype.getCachedToken = function(){
 				
 */
 
-Instagram.prototype.getPopularFeed = function( callback ) {
+Instagram.prototype.getPopularFeed = function( callback, error ) {
 	return $.ajax(
 		this.createRequest({
 			url: this.apiURLS.popular,
-			success: callback
+			success: function( response ){
+				if( response.meta.code === 200 ){
+					callback( response );
+				}
+				else{
+					this.error( response );				}
+			},
+			error: error || function( response ){
+				console.log("ERROR: ", response );
+			}
 		})
 	);
 }
@@ -133,7 +144,7 @@ Instagram.prototype.getPopularFeed = function( callback ) {
 				
 */
 
-Instagram.prototype.getUserFeed = function( callback, count, min_id, max_id ) {
+Instagram.prototype.getUserFeed = function( callback, count, min_id, max_id, error ) {
 	var data = {};
 	
 	data["count"] = count !== undefined ? count : undefined;
@@ -146,12 +157,21 @@ Instagram.prototype.getUserFeed = function( callback, count, min_id, max_id ) {
 		this.createRequest({
 			url: this.apiURLS.userFeed,
 			data: data,
-			success: callback
+			success: function( response ){
+				if( response.meta.code === 200 ){
+					callback( response );
+				}
+				else{
+					this.error( response );				}
+			},
+			error: error || function( response ){
+				console.log("ERROR: ", response );
+			}
 		})
 	);
 }
 
-Instagram.prototype.getUserLikes = function( callback, count, max_like_id ) {
+Instagram.prototype.getUserLikes = function( callback, count, max_like_id, error ) {
 	var data = {};
 	
 	data["count"] = count !== undefined ? count : undefined;
@@ -163,16 +183,34 @@ Instagram.prototype.getUserLikes = function( callback, count, max_like_id ) {
 		this.createRequest({
 			url: this.apiURLS.userLikes,
 			data: data,
-			success: callback
+			success: function( response ){
+				if( response.meta.code === 200 ){
+					callback( response );
+				}
+				else{
+					this.error( response );				}
+			},
+			error: error || function( response ){
+				console.log("ERROR: ", response );
+			}
 		})
 	);
 }
 
-Instagram.prototype.getUserRequests = function( callback ) {
+Instagram.prototype.getUserRequests = function( callback, error ) {
 	return $.ajax(
 		this.createRequest({
 			url: this.apiURLS.userLikes,
-			success: callback
+			success: function( response ){
+				if( response.meta.code === 200 ){
+					callback( response );
+				}
+				else{
+					this.error( response );				}
+			},
+			error: error || function( response ){
+				console.log("ERROR: ", response );
+			}
 		})
 	);
 }
@@ -184,43 +222,116 @@ Instagram.prototype.getUserRequests = function( callback ) {
 				
 */
 
-Instagram.prototype.getMedia = function( callback, id ) {
+Instagram.prototype.getMedia = function( callback, id, error ) {
 	var customURL = this.apiURLS.media.replace(/{{id}}/ig, id);
 	console.log( "Media URL", customURL );
 	
 	return $.ajax(
 		this.createRequest({
 			url: customURL,
-			success: callback
+			success: function( response ){
+				if( response.meta.code === 200 ){
+					callback( response );
+				}
+				else{
+					this.error( response );				}
+			},
+			error: error || function( response ){
+				console.log("ERROR: ", response );
+			}
 		})
 	);
 }
 
-Instagram.prototype.getLikes = function( callback, id ) {
+Instagram.prototype.getLikes = function( callback, id, error ) {
 	var customURL = this.apiURLS.likes.replace(/{{id}}/ig, id);
 	console.log( "Media Likes URL", customURL );
 	
 	return $.ajax(
 		this.createRequest({
 			url: customURL,
-			success: callback
+			success: function( response ){
+				if( response.meta.code === 200 ){
+					callback( response );
+				}
+				else{
+					this.error( response );				}
+			},
+			error: error || function( response ){
+				console.log("ERROR: ", response );
+			}
 		})
 	);
 }
 
-Instagram.prototype.getComments = function( callback, id ) {
+Instagram.prototype.setLike = function( callback, id, error ) {
+	var customURL = this.apiURLS.likes.replace(/{{id}}/ig, id);
+	console.log( "Media Likes URL", customURL );
+	
+	return $.ajax(
+		this.createRequest({
+			url: customURL,
+			type: "POST",
+			dataType: "json",
+			success: function( response ){
+				if( response.meta.code === 200 ){
+					callback( response );
+				}
+				else{
+					this.error( response );				}
+			},
+			error: error || function( response ){
+				console.log("ERROR: ", response );
+			}
+		})
+	);
+}
+
+Instagram.prototype.deleteLike = function( callback, id, error ) {
+	var customURL = this.apiURLS.likes.replace(/{{id}}/ig, id);
+	console.log( "Media Likes URL", customURL );
+	
+	return $.ajax(
+		this.createRequest({
+			url: customURL,
+			type: "DELETE",
+			dataType: "json",
+			success: function( response ){
+				if( response.meta.code === 200 ){
+					callback( response );
+				}
+				else{
+					this.error( response );				}
+			},
+			error: error || function( response ){
+				console.log("ERROR: ", response );
+			}
+		})
+	);
+}
+
+Instagram.prototype.getComments = function( callback, id, error ) {
 	var customURL = this.apiURLS.comments.replace(/{{id}}/ig, id);
 	console.log( "Media Comments URL", customURL );
 	
 	return $.ajax(
 		this.createRequest({
 			url: customURL,
-			success: callback
+			success: function( response ){
+				if( response.meta.code === 200 ){
+					callback( response );
+				}
+				else{
+					this.error( response );				}
+			},
+			error: error || function( response ){
+				console.log("ERROR: ", response );
+			}
 		})
 	);
 }
 
-Instagram.prototype.setComment = function( callback, id, text ) {
+Instagram.prototype.setComment = function( callback, id, text, error ) {
 	var customURL = this.apiURLS.comments.replace(/{{id}}/ig, id);
 	var data ={}
 	
@@ -233,8 +344,14 @@ Instagram.prototype.setComment = function( callback, id, text ) {
 			data: data,
 			type: "POST",
 			dataType: "json",
-			success: callback,
-			error: function( response ){
+			success: function( response ){
+				if( response.meta.code === 200 ){
+					callback( response );
+				}
+				else{
+					this.error( response );				}
+			},
+			error: error || function( response ){
 				console.log("ERROR: ", response );
 			}
 		})
