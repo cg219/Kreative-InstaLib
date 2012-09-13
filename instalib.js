@@ -25,11 +25,14 @@ function Instagram( clientID, responseURL ){
 		}
 	};
 	this.apiURLS = {
+		authorize : "https://instagram.com/oauth/authorize/?client_id={{clientid}}&redirect_uri={{response}}&response_type=token",
 		popular : "https://api.instagram.com/v1/media/popular",
 		userFeed : "https://api.instagram.com/v1/users/self/feed",
 		userLikes : "https://api.instagram.com/v1/users/self/media/liked",
 		media : "https://api.instagram.com/v1/media/{{id}}",
-		mediaLikes : "https://api.instagram.com/v1/media/{{id}}/likes"
+		likes : "https://api.instagram.com/v1/media/{{id}}/likes",
+		comments : "https://api.instagram.com/v1/media/{{id}}/comments",
+		requests : "https://api.instagram.com/v1/users/self/requested-by"
 	}
 }
 
@@ -47,7 +50,7 @@ Instagram.prototype.createRequest = function( options ) {
 		return request;
 	}
 	else{
-		console.log("Options", this.options );
+		console.log("Updated Options", $.extend( {}, this.options, options ) );
 		return $.extend( {}, this.options, options );
 	}
 }
@@ -78,7 +81,10 @@ Instagram.prototype.getToken = function(){
 
 Instagram.prototype.authorize = function( scopes ){
 	var scopeString = ( scopes ) ? "&scopes=" + scopes.join("+") : "";
-	window.location = "https://instagram.com/oauth/authorize/?client_id=" + this.clientID + "&redirect_uri=" + this.responseURL + "&response_type=token" + scopeString;
+	var url = this.apiURLS.authorize.replace(/{{clientid}}/ig, this.clientID);
+	
+	url  = url.replace(/{{response}}/, this.responseURL);
+	window.location = url + scopeString;
 }
 
 Instagram.prototype.getCachedToken = function(){
@@ -151,6 +157,15 @@ Instagram.prototype.getUserLikes = function( callback, count, max_like_id ) {
 	);
 }
 
+Instagram.prototype.getUserRequests = function( callback ) {
+	return $.ajax(
+		this.createRequest({
+			url: this.apiURLS.userLikes,
+			success: callback
+		})
+	);
+}
+
 
 /*
 
@@ -170,8 +185,8 @@ Instagram.prototype.getMedia = function( callback, id ) {
 	);
 }
 
-Instagram.prototype.getMediaLikes = function( callback, id ) {
-	var customURL = this.apiURLS.mediaLikes.replace(/{{id}}/ig, id);
+Instagram.prototype.getLikes = function( callback, id ) {
+	var customURL = this.apiURLS.likes.replace(/{{id}}/ig, id);
 	console.log( "Media Likes URL", customURL );
 	
 	return $.ajax(
@@ -181,3 +196,40 @@ Instagram.prototype.getMediaLikes = function( callback, id ) {
 		})
 	);
 }
+
+Instagram.prototype.getComments = function( callback, id ) {
+	var customURL = this.apiURLS.comments.replace(/{{id}}/ig, id);
+	console.log( "Media Comments URL", customURL );
+	
+	return $.ajax(
+		this.createRequest({
+			url: customURL,
+			success: callback
+		})
+	);
+}
+/*
+Instagram.prototype.setComment = function( callback, id, text ) {
+	var customURL = this.apiURLS.comments.replace(/{{id}}/ig, id);
+	var data ={}
+	
+	data["text"] = text;
+	data = $.extend( {}, this.options.data, data );
+	
+	return $.ajax(
+		this.createRequest({
+			url: customURL,
+			data: data,
+			type: "POST",
+			dataType: "json",
+			success: callback
+		})
+	);
+}
+*/
+
+/*
+
+				SEARCH RELATED
+				
+*/
