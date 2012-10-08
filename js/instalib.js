@@ -181,7 +181,7 @@ Instagram.prototype.getUserFeed = function( callback, count, min_id, max_id, err
 	);
 }
 
-Instagram.prototype.getUserRecent = function( callback, id, count, min_id, max_id, min_time, max_time, error ) {
+Instagram.prototype.getUserRecent = function( callback, id , count, min_id, max_id, min_time, max_time, error ) {
 	var customURL = this.apiURLS.userRecentMedia.replace(/{{id}}/ig, id);
 	var data = {};
 	
