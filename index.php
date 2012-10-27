@@ -166,10 +166,11 @@
 			}, userID, "unfollow");*/
 		});
 		
-		instagram.getPopularFeed( function(response){
-			console.log(response);
-			
-			$("#popular ul.feed").append( populate( response ) );
+		instagram.feed({
+			type: "popular",
+			success: function(response){
+				$("#popular ul.feed").append( populate( response ) );
+			}
 		});
 		
 		/*instagram.getUserFeed( function(response){

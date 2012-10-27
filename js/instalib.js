@@ -53,6 +53,168 @@ function Instagram( clientID, responseURL, proxy, accessToken ){
 
 /*
 
+				METHODS
+				
+*/
+
+Instagram.prototype.like = function( options ){
+	if( typeof options === "string" ){
+		this.setLike( undefined, options, undefined );
+	}
+	else{
+		if( options.delete === true ){
+			this.deleteLike( options.success, options.id, options.error );
+		}
+		else{
+			this.setLike( options.success, options.id, options.error );
+		}
+	}
+}
+
+Instagram.prototype.comment = function( options ){
+	this.setComment( options.success, options.id, options.data, options.error );
+}
+
+Instagram.prototype.search = function( options ){
+	ir( typeof options === "string" ){
+		
+	}
+	else{
+		switch(options.type){
+			case "user":
+				this.userSearch( options.success, options.data, options.amount, options.error );
+				break;
+			
+			case "tag":
+				this.tagSearch( options.success, options.data, options.error );
+				break;
+			
+			case "location":
+				this.locationSearch( options.success, options.latitude, options.longitude, options.distance, options.foursquare, options.error );
+				break;
+			
+			case "media":
+				this.mediaSearch( options.success, options.latitude, options.longitude, options.distance, options.min_time, options.max_time, options.error );
+				break;
+			
+			default:
+				this.tagSearch( options.success, options.data, options.error );
+				break;
+		}
+	}
+}
+
+Instagram.prototype.user = function( options ){
+	if( typeof options === "string" ){
+		this.getUser( function(response){ return response; }, options, undefined );
+	}
+	else{
+		switch(options.type){
+			case "user":
+				this.getUser( options.success, options.id, options.error );
+				break;
+			
+			case "followers":
+				this.getFollowers( options.success, options.id, options.error );
+				break;
+			
+			case "following":
+				this.getFollows( options.success, options.id, options.error );
+				break;
+			
+			case "requests":
+				this.getUserRequests( options.success, options.error );
+				break;
+			
+			case "relationship":
+				if(options.action){
+					this.setRelationship( options.success, options.id, options.action, options.error );
+				}
+				else{
+					this.getRelationship( options.success, options.id, options.error );
+				}
+				break;
+				
+			default:
+				this.getUser( options.success, options.id, options.error );
+				break;
+		}
+	}
+}
+
+Instagram.prototype.feed = function( options ){
+	if( typeof options === "string" ){
+		
+	}
+	else{
+		switch(options.type){
+			case "user": 
+				this.getUserFeed( options.success, options.amount, options.min_id, options.max_id, options.error );
+				break;
+			
+			case "popular":
+				this.getPopularFeed( options.success, options.error );
+				break;
+			
+			case "recent":
+				this.getUserRecent( options.success, options.amount, options.min_id, options.max_id, options.min_time, options.max_time, options.error );
+				break;
+			
+			case "likes":
+				this.getUserLikes( options.success, options.amount, options.max_id, options.error );
+				break;
+				
+			case "tagged":
+				this.getRecentTagged( options.success, options.data, options.min_id, options.max_id, options.error );
+				break;
+				
+			case "location":
+				this.getRecentLocations( options.success, options.id, options.min_id, options.max_id, options.min_time, options.max_time, options.error );
+				break;
+				
+			default:
+				this.getPopularFeed( options.success, options.error );
+				break;
+		}
+	}
+}
+
+Instagram.prototype.media = function( options ){
+	if( typeof options === "string" ){
+		
+	}
+	else{
+		switch(options.type){
+			case "image":
+				this.getMedia( options.success, options.id, options.error );
+				break;
+				
+			case "likes":
+				this.getLikes( options.success, options.id, options.error );
+				break;
+			
+			case "comments":
+				this.getComments( options.success, options.id, options.error );
+				break;
+				
+			case "locations":
+				this.getLocation( options.success, options.id, options.error );
+				break;
+			
+			case "tags":
+				this.getTag( options.success, options.id, options.error );
+				break;
+				
+			default:
+				this.getMedia( options.success, options.id, options.error );
+				break;
+		}
+	}
+}
+
+
+/*
+
 				HELPERS
 				
 */
