@@ -3,7 +3,7 @@
 	Author: Clemente Gomez
 	Website: http://imkreative.com
 	Library Name: Kreative InstaLib
-	Version: 0.4a
+	Version: 0.7a
 	
 	Dependencies: jQuery
 	Description: jQuery HTML5 Instagram Client Library. Allows for Instagram Authorization as well as  retreiving, and posting data to a users
