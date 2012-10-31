@@ -76,7 +76,7 @@ Instagram.prototype.comment = function( options ){
 }
 
 Instagram.prototype.search = function( options ){
-	ir( typeof options === "string" ){
+	if( typeof options === "string" ){
 		
 	}
 	else{
