@@ -226,7 +226,7 @@ Instagram.prototype.createRequest = function( options ) {
 		return request;
 	}
 	else{
-		console.log("Updated Options", $.extend( {}, this.options, options ) );
+		// console.log("Updated Options", $.extend( {}, this.options, options ) );
 		var newOptions = $.extend( {}, this.options, options );
 		
 		if( newOptions.type !== "GET" )
@@ -309,7 +309,7 @@ Instagram.prototype.getUser = function( callback, id, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -337,7 +337,7 @@ Instagram.prototype.getUserFeed = function( callback, count, min_id, max_id, err
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -368,7 +368,7 @@ Instagram.prototype.getUserRecent = function( callback, id , count, min_id, max_
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -395,7 +395,7 @@ Instagram.prototype.getUserLikes = function( callback, count, max_like_id, error
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -414,7 +414,7 @@ Instagram.prototype.getUserRequests = function( callback, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -435,7 +435,7 @@ Instagram.prototype.getFollowers = function( callback, id, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -456,7 +456,7 @@ Instagram.prototype.getFollows = function( callback, id, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -477,7 +477,7 @@ Instagram.prototype.getRelationship = function( callback, id, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -505,7 +505,7 @@ Instagram.prototype.setRelationship = function( callback, id, action, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -531,7 +531,7 @@ Instagram.prototype.getPopularFeed = function( callback, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -539,7 +539,7 @@ Instagram.prototype.getPopularFeed = function( callback, error ) {
 
 Instagram.prototype.getMedia = function( callback, id, error ) {
 	var customURL = this.apiURLS.media.replace(/{{id}}/ig, id);
-	console.log( "Media URL", customURL );
+	// console.log( "Media URL", customURL );
 	
 	return $.ajax(
 		this.createRequest({
@@ -553,7 +553,7 @@ Instagram.prototype.getMedia = function( callback, id, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -561,7 +561,7 @@ Instagram.prototype.getMedia = function( callback, id, error ) {
 
 Instagram.prototype.getLikes = function( callback, id, error ) {
 	var customURL = this.apiURLS.likes.replace(/{{id}}/ig, id);
-	console.log( "Media Likes URL", customURL );
+	// console.log( "Media Likes URL", customURL );
 	
 	return $.ajax(
 		this.createRequest({
@@ -575,7 +575,7 @@ Instagram.prototype.getLikes = function( callback, id, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -583,7 +583,7 @@ Instagram.prototype.getLikes = function( callback, id, error ) {
 
 Instagram.prototype.setLike = function( callback, id, error ) {
 	var customURL = this.apiURLS.likes.replace(/{{id}}/ig, id);
-	console.log( "Media Likes URL", customURL );
+	// console.log( "Media Likes URL", customURL );
 	
 	return $.ajax(
 		this.createRequest({
@@ -599,7 +599,7 @@ Instagram.prototype.setLike = function( callback, id, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -607,7 +607,7 @@ Instagram.prototype.setLike = function( callback, id, error ) {
 
 Instagram.prototype.deleteLike = function( callback, id, error ) {
 	var customURL = this.apiURLS.likes.replace(/{{id}}/ig, id);
-	console.log( "Media Likes URL", customURL );
+	// console.log( "Media Likes URL", customURL );
 	
 	return $.ajax(
 		this.createRequest({
@@ -623,7 +623,7 @@ Instagram.prototype.deleteLike = function( callback, id, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -644,7 +644,7 @@ Instagram.prototype.getComments = function( callback, id, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -672,7 +672,7 @@ Instagram.prototype.setComment = function( callback, id, text, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -686,7 +686,7 @@ Instagram.prototype.setComment = function( callback, id, text, error ) {
 
 Instagram.prototype.getTag = function( callback, tag, error ) {
 	var customURL = this.apiURLS.tags.replace(/{{tag}}/ig, tag.replace(/\#/ig, "") );
-	console.log( "TAG: ", tag, "URL: ", customURL );
+	// console.log( "TAG: ", tag, "URL: ", customURL );
 	
 	return $.ajax(
 		this.createRequest({
@@ -700,7 +700,7 @@ Instagram.prototype.getTag = function( callback, tag, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -715,7 +715,7 @@ Instagram.prototype.getRecentTagged = function( callback, tag, min, max, error )
 	
 	data = $.extend( {}, this.options.data, data );
 	
-	console.log( "TAG: ", tag, "URL: ", customURL );
+	// console.log( "TAG: ", tag, "URL: ", customURL );
 	
 	return $.ajax(
 		this.createRequest({
@@ -730,7 +730,7 @@ Instagram.prototype.getRecentTagged = function( callback, tag, min, max, error )
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -745,7 +745,7 @@ Instagram.prototype.getRecentTagged = function( callback, tag, min, max, error )
 
 Instagram.prototype.getLocation = function( callback, id, error ) {
 	var customURL = this.apiURLS.locations.replace(/{{id}}/ig, id);
-	console.log( "ID: ", id, "URL: ", customURL );
+	// console.log( "ID: ", id, "URL: ", customURL );
 	
 	return $.ajax(
 		this.createRequest({
@@ -759,7 +759,7 @@ Instagram.prototype.getLocation = function( callback, id, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -776,7 +776,7 @@ Instagram.prototype.getRecentLocations = function( callback, id, min, max, min_t
 	
 	data = $.extend( {}, this.options.data, data );
 	
-	console.log( "ID: ", id, "URL: ", customURL );
+	// console.log( "ID: ", id, "URL: ", customURL );
 	
 	return $.ajax(
 		this.createRequest({
@@ -791,7 +791,7 @@ Instagram.prototype.getRecentLocations = function( callback, id, min, max, min_t
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -829,7 +829,7 @@ Instagram.prototype.mediaSearch = function( callback, lat, lng, distance, min_ti
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -859,7 +859,7 @@ Instagram.prototype.locationSearch = function( callback, lat, lng, distance, fou
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -884,7 +884,7 @@ Instagram.prototype.tagSearch = function( callback, query, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
@@ -910,7 +910,7 @@ Instagram.prototype.userSearch = function( callback, query, count, error ) {
 				}
 			},
 			error: error || function( response ){
-				console.log("ERROR: ", response );
+				// console.log("ERROR: ", response );
 			}
 		})
 	);
